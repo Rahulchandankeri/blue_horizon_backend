@@ -1,0 +1,8 @@
+const SUCCESS_CODES = {
+  OTP_SENT: 'OTP_SENT',
+  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+
+  // BUS
+  BUS_CREATED: 'BUS_CREATED',
+};
+export default SUCCESS_CODES;
