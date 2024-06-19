@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import Route from '../../models/routes/routeModel';
 import AppError from '../../utils/appError';
 import Razorpay from 'razorpay';
@@ -23,7 +23,6 @@ const createRoute = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
   } catch (error: any) {
-    console.log(error?.message);
     res.status(400).json({
       status: 'fail',
       responseCode: 'ROUTE_CREATE_FAIL',
@@ -96,7 +95,6 @@ const createBusBooking = async (req: Request, res: Response, next: NextFunction)
   try {
     const user: any = req.user;
     const currentUser = await User.findById(user._id);
-    console.log(currentUser, booking_id);
     const booking = await Booking.findOne({ booking_id });
 
     if (!currentUser || !booking) {
@@ -135,7 +133,7 @@ const busBookingSuccess = async (req: Request, res: Response, next: NextFunction
       if (!booking) {
         return res.status(404).json({ message: 'Booking not found' });
       }
-      console.log(`booking`, booking);
+
       const _user = req.user;
       // Create a record of the payment in your database
       const payment = await Payments.create({
@@ -146,7 +144,6 @@ const busBookingSuccess = async (req: Request, res: Response, next: NextFunction
         // Other payment details as needed
       });
 
-      console.log(`payment`, payment);
       // Optionally, update booking status or perform other actions
 
       res.status(200).json({ message: 'Payment successful', responseCode: 'BOOKING_SUCCESS' });

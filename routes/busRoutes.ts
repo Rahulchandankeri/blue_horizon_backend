@@ -7,6 +7,6 @@ const router = express.Router();
 router.post('/create', protectedRoutes, createBus);
 router.post('/initiate-booking', validateEmail, protectedRoutes, initiateBooking);
 router.post('/create-booking', protectedRoutes, createBusBooking);
-router.post('/booking-success', protectedRoutes, busBookingSuccess);
+router.post('/complete-payment', protectedRoutes, busBookingSuccess);
 
 export default router;

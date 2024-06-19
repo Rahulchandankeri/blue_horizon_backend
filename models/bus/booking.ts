@@ -1,5 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose';
 const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 const bookingSchema = new Schema({
   booking_id: {
     type: Number,

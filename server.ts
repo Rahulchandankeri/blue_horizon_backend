@@ -5,12 +5,13 @@ require('dotenv').config();
 const userRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const AutoIncrementFactory = require('mongoose-sequence');
 
 import mongoose from 'mongoose';
 import busRoutes from './routes/busRoutes';
 import tripRoutes from './routes/tripRoutes';
 
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3002'], credentials: true }));
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -23,7 +24,7 @@ declare var process: {
   };
 };
 
-mongoose
+const connection = mongoose
   .connect(process.env.DB.replace('<password>', process.env.DB_PASS), {})
   .then((conn) => {
     console.log(`Connection to db success!`);
@@ -34,9 +35,10 @@ mongoose
       console.log(`[CRITICAL ERROR] ${err.message}`);
     }
   });
-
+const AutoIncrement = AutoIncrementFactory(connection);
 app.use(`/api/v1/user`, userRoutes);
 app.use(`/api/v1/bus`, busRoutes);
+
 app.use(`/api/v1/route`, tripRoutes);
 
 app.listen(process.env.SERVER_PORT || 3004, () => {
