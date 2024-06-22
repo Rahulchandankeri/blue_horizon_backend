@@ -19,15 +19,6 @@ app.use(
 app.use(express.json());
 app.use(bodyParser.json());
 
-declare var process: {
-  env: {
-    DB: string;
-    DB_PASS: string;
-    NODE_ENV: string;
-    SERVER_PORT: string;
-  };
-};
-
 const connection = mongoose
   .connect(process.env.DB.replace('<password>', process.env.DB_PASS), {})
   .then((conn) => {

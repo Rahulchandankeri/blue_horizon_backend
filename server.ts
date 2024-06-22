@@ -40,8 +40,8 @@ app.use(`/api/v1/bus`, busRoutes);
 
 app.use(`/api/v1/route`, tripRoutes);
 
-app.listen(process.env.SERVER_PORT || 3004, () => {
-  console.log(`Server running on port ${process.env.SERVER_PORT}`);
-});
 app.use(globalErrorHandler);
-export default app;
+// app.listen(process.env.SERVER_PORT || 3004, () => {
+//   console.log(`Server running on port ${process.env.SERVER_PORT}`);
+// });
+// export default app;
