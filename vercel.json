@@ -3,13 +3,13 @@
   "builds": [
     {
       "src": "/api/server.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node-typescript"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/server.js"
+      "dest": "/build/server.js"
     }
   ]
 }
