@@ -12,7 +12,7 @@ import tripRoutes from '../routes/tripRoutes';
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://bluehorizon.rahulcodes.dev'],
     credentials: true,
   })
 );
@@ -26,7 +26,7 @@ const connection = mongoose
   })
   .catch((err) => {
     console.log(`Connection to db failed`);
-    console.log(err);
+
     if (process.env.NODE_ENV == 'dev') {
       console.log(`[CRITICAL ERROR] ${err.message}`);
     }
