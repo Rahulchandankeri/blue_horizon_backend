@@ -12,7 +12,7 @@ import tripRoutes from '../routes/tripRoutes';
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3002', 'https://bus-booking-project.vercel.app/'],
+    origin: ['http://localhost:3000', 'http://localhost:3002', 'https://api-bluehorizon.rahulcodes.dev'],
     credentials: true,
   })
 );
