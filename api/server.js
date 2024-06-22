@@ -26,6 +26,7 @@ const connection = mongoose
   })
   .catch((err) => {
     console.log(`Connection to db failed`);
+    console.log(err);
     if (process.env.NODE_ENV == 'dev') {
       console.log(`[CRITICAL ERROR] ${err.message}`);
     }
