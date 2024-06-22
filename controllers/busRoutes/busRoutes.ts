@@ -94,6 +94,10 @@ const getBusRoutes = async (req: Request, res: Response, next: NextFunction) => 
     });
   }
 };
+
+const helloWorld = (req: Request, res: Response, next: NextFunction) => {
+  res.send(`Hello`);
+};
 declare var process: {
   env: {
     RAZOR_KEY_ID: string;
@@ -228,4 +232,5 @@ export {
   busBookingSuccess,
   assignBusToRoute,
   getAvailableBusOnRoutes,
+  helloWorld,
 };
