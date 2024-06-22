@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post('/create', protectedRoutes, createRoute);
 router.post('/get-routes', getBusRoutes);
-router.get('/', helloWorld);
+router.get('/test', helloWorld);
 
 export default router;

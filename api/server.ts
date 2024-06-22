@@ -39,7 +39,6 @@ app.use(`/api/v1/user`, userRoutes);
 app.use(`/api/v1/bus`, busRoutes);
 
 app.use(`/api/v1/route`, tripRoutes);
-app.use(`/ `, tripRoutes);
 
 app.use(globalErrorHandler);
 export default app;
