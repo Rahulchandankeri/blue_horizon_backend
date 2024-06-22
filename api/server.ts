@@ -7,8 +7,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 import mongoose from 'mongoose';
-import busRoutes from './routes/busRoutes';
-import tripRoutes from './routes/tripRoutes';
+import busRoutes from '../routes/busRoutes';
+import tripRoutes from '../routes/tripRoutes';
 
 app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3002'], credentials: true }));
 app.use(express.json());

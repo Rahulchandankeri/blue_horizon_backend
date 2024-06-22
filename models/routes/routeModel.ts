@@ -1,9 +1,13 @@
-import { Document, Schema, model } from 'mongoose';
-const validator = require('validator');
+import mongoose, { Document, Schema, model } from 'mongoose';
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 interface IRoute extends Document {
-  route_Id?: String | number;
+  route_id?: String | number;
   source: String;
   destination: String;
+  departure: String;
+  arrival: String;
+  price: number;
 }
 const cityEnumValues = [
   'mumbai',
@@ -29,15 +33,15 @@ const cityEnumValues = [
 ];
 
 const routeSchema: Schema = new Schema({
-  route_Id: {
-    type: String,
+  route_id: {
+    type: Number,
   },
   source: {
     type: String,
     required: true,
     enum: {
       values: cityEnumValues,
-      message: 'Source must be one of the predefined city values',
+      message: 'Source must be one of the predefined city',
     },
   },
   destination: {
@@ -45,10 +49,26 @@ const routeSchema: Schema = new Schema({
     required: true,
     enum: {
       values: cityEnumValues,
-      message: 'Destination must be one of the predefined city values',
+      message: 'Destination must be one of the predefined city',
     },
   },
+  departure: {
+    type: String,
+    required: true,
+  },
+  arrival: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    default: 750,
+    required: true,
+  },
 });
+
+routeSchema.plugin(AutoIncrement, { inc_field: 'route_id', start_seq: 100 });
+
 // Custom validation function to ensure source and destination are not the same
 routeSchema.pre('validate', function (next) {
   if (this.source === this.destination) {

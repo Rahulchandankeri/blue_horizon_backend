@@ -5,14 +5,16 @@ import Razorpay from 'razorpay';
 import Booking from '../../models/bus/booking';
 import Payments from '../../models/bus/payment';
 import User from '../../models/auth/userModel';
+import Bus from '../../models/bus/busModel';
 
 const createRoute = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { source, destination } = req.body;
+    const { source, destination, departure, arrival, price } = req.body;
 
     if (!source || !destination) new AppError(`Source / Destination missing`, 400, 'ERR');
+    if (!departure || !arrival) new AppError(`Departure / arrival missing`, 400, 'ERR');
 
-    const newRoute = await Route.create({ source, destination });
+    const newRoute = await Route.create({ source, destination, departure, arrival, price });
 
     res.status(200).json({
       status: 'sucess',
@@ -20,6 +22,10 @@ const createRoute = async (req: Request, res: Response, next: NextFunction) => {
       routeDetails: {
         source: newRoute.source,
         destination: newRoute.destination,
+        departure: newRoute.departure,
+        arrival: newRoute.arrival,
+        route_id: newRoute.route_id,
+        price: newRoute.price,
       },
     });
   } catch (error: any) {
@@ -32,11 +38,38 @@ const createRoute = async (req: Request, res: Response, next: NextFunction) => {
 };
 // ASSIGN BUS
 
-const assignBus = async (req: Request, res: Response, next: NextFunction) => {
+const assignBusToRoute = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    //
-  } catch (error) {
-    //
+    const { bus_id, route_id, journeyDate } = req.body;
+
+    if (!journeyDate) {
+      throw new AppError(`Journey date required`, 404, `Err`);
+    }
+    const bus = await Bus.findOne({ bus_id });
+    if (!bus) {
+      return res.status(404).send({ error: 'Bus not found' });
+    }
+    if (bus.isAssociatedWithRoute) {
+      throw new AppError(`Bus already assigned on other route`, 404, 'Err');
+    }
+    const route = await Route.findOne({ route_id });
+    if (!route) {
+      return res.status(404).send({ error: 'Route not found' });
+    }
+
+    bus.route_id = route?._id;
+    bus.journeyDate = journeyDate;
+    bus.isAssociatedWithRoute = true;
+    await bus.save();
+
+    res.status(200).json({
+      bus,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      status: 'fail',
+      message: error?.message,
+    });
   }
 };
 
@@ -135,16 +168,13 @@ const busBookingSuccess = async (req: Request, res: Response, next: NextFunction
       }
 
       const _user = req.user;
-      // Create a record of the payment in your database
+
       const payment = await Payments.create({
         user: _user?._id,
         booking: booking._id,
         razorpayPaymentId: razorpay_payment_id,
         amount: +paidAmount / 100, // Convert amount back to rupees
-        // Other payment details as needed
       });
-
-      // Optionally, update booking status or perform other actions
 
       res.status(200).json({ message: 'Payment successful', responseCode: 'BOOKING_SUCCESS' });
     }
@@ -153,4 +183,49 @@ const busBookingSuccess = async (req: Request, res: Response, next: NextFunction
     res.status(400).json({ message: 'Payment not captured or failed' });
   }
 };
-export { createRoute, getBusRoutes, initiateBooking, createBusBooking, busBookingSuccess };
+
+const getAvailableBusOnRoutes = async (req: Request, res: Response, next: NextFunction) => {
+  const { source, destination, journeyDate } = req.body;
+
+  try {
+    const routes = await Route.find({ source, destination });
+    if (routes.length === 0) {
+      return res.status(404).send({ error: 'No routes found' });
+    }
+    const [day, month, year] = journeyDate.split('/');
+
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+
+    const routeIds = routes.map((route) => route._id);
+    const buses = await Bus.find({
+      route_id: { $in: routeIds },
+      journeyDate: journeyDate,
+    });
+    let _routes: any = [];
+
+    routes?.forEach((trip) => {
+      _routes.push({
+        source: trip?.source,
+        destination: trip?.destination,
+        departure: trip?.departure,
+        arrival: trip?.arrival,
+        price: trip?.price,
+      });
+    });
+
+    res.status(200).json({
+      availableTrips: _routes,
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+export {
+  createRoute,
+  getBusRoutes,
+  initiateBooking,
+  createBusBooking,
+  busBookingSuccess,
+  assignBusToRoute,
+  getAvailableBusOnRoutes,
+};
