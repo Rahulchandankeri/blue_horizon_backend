@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const globalErrorHandler = require('./controllers/errorController');
 require('dotenv').config();
-const userRoutes = require('./routes/authRoutes');
+const userRoutes = require('../routes/authRoutes');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -40,7 +40,4 @@ app.use(`/api/v1/bus`, busRoutes);
 
 app.use(`/api/v1/route`, tripRoutes);
 
-app.listen(process.env.SERVER_PORT || 3004, () => {
-  console.log(`Server running on port ${process.env.SERVER_PORT}`);
-});
 app.use(globalErrorHandler);
