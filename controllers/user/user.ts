@@ -37,7 +37,6 @@ const getBookings = async (req: Request, res: Response, next: NextFunction) => {
           'bookingDetails.__v': 0, // Exclude __v field from nested bookings
           'bookingDetails.date': 0, // Exclude date field from nested bookings
           'bookingDetails.user': 0, // Exclude user field from nested bookings
-          // bookingDetails: 1,
         },
       },
     ]);
