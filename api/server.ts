@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const globalErrorHandler = require('./controllers/errorController');
+const globalErrorHandler = require('../controllers/errorController');
 require('dotenv').config();
 const userRoutes = require('../routes/authRoutes');
 const cors = require('cors');
