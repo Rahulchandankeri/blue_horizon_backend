@@ -10,7 +10,12 @@ import mongoose from 'mongoose';
 import busRoutes from '../routes/busRoutes';
 import tripRoutes from '../routes/tripRoutes';
 
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3002'], credentials: true }));
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'http://localhost:3002', 'https://bus-booking-project.vercel.app/'],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -41,4 +46,5 @@ app.use(`/api/v1/bus`, busRoutes);
 app.use(`/api/v1/route`, tripRoutes);
 
 app.use(globalErrorHandler);
+
 export default app;
