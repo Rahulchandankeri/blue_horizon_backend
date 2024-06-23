@@ -11,6 +11,9 @@ const bookingSchema = new Schema({
   name: { type: String, required: true },
   source: { type: String, required: true },
   destination: { type: String, required: true },
+  arrival: { type: String, required: true },
+  departure: { type: String, required: true },
+  price: { type: String, required: true },
   journeyDate: { type: String, required: true },
   email_id: { type: String, required: true },
   paymentStatus: {

@@ -113,7 +113,7 @@ const razorpay = new Razorpay({
 const initiateBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
-    const { name, email_id, source, destination, journeyDate } = req.body;
+    const { name, email_id, source, destination, journeyDate, price, departure, arrival } = req.body;
 
     const newBooking = await Booking.create({
       name,
@@ -123,6 +123,9 @@ const initiateBooking = async (req: Request, res: Response, next: NextFunction) 
       source,
       destination,
       journeyDate,
+      price,
+      departure,
+      arrival,
     });
     res.status(201).json({ message: 'Booking created successfully', booking_id: newBooking.booking_id });
   } catch (error) {
