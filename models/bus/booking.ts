@@ -9,7 +9,13 @@ const bookingSchema = new Schema({
   },
   userId: {},
   name: { type: String, required: true },
+  source: { type: String, required: true },
+  destination: { type: String, required: true },
+  journeyDate: { type: String, required: true },
   email_id: { type: String, required: true },
+  paymentStatus: {
+    type: String,
+  },
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   date: { type: String, required: true, default: Date.now() },
 });
