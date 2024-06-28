@@ -27,6 +27,9 @@
     "start": "tsc --watch ",
     "dev": "set NODE_ENV=dev && concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
     "prod": "set NODE_ENV=prod && nodemon server.js",
+    "build": "tsc",
+    "lint": "eslint .",
+    "prestart": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rahul Chandankeri",
