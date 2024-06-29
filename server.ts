@@ -10,7 +10,9 @@ import userRoutes from './routes/authRoutes';
 import tripRoutes from './routes/tripRoutes';
 import { globalErrorHandler } from './controllers/errorController';
 
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3002'], credentials: true }));
+app.use(
+  cors({ origin: ['http://localhost:3000', 'http://localhost:3002', 'https://bluehorizon.rahulcodes.dev'], credentials: true })
+);
 app.use(express.json());
 app.use(bodyParser.json());
 
