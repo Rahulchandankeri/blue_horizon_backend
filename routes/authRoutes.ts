@@ -9,4 +9,4 @@ router.route('/signup').post(validateEmail, authController.signup);
 router.route('/validate-otp').post(validateEmail, authController.verifyOTP);
 router.get('/get-bookings', protectedRoutes, getBookings);
 
-module.exports = router;
+export default router;

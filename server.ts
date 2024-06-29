@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
-const globalErrorHandler = require('./controllers/errorController');
 require('dotenv').config();
-const userRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
 import mongoose from 'mongoose';
 import busRoutes from './routes/busRoutes';
+import userRoutes from './routes/authRoutes';
 import tripRoutes from './routes/tripRoutes';
+import { globalErrorHandler } from './controllers/errorController';
 
 app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3002'], credentials: true }));
 app.use(express.json());

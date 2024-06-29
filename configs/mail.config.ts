@@ -12,7 +12,7 @@ const transport = {
 };
 
 // TRANSPORTER
-const transporter = nodemailer.createTransport(transport);
+export const transporter = nodemailer.createTransport(transport);
 transporter.verify((err: Error, success: any) => {
   if (err) {
     console.log(err);
@@ -20,5 +20,3 @@ transporter.verify((err: Error, success: any) => {
     console.log(`Connection to mail success!`);
   }
 });
-
-module.exports = transporter;

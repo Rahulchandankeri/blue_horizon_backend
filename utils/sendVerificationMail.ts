@@ -1,5 +1,5 @@
+import { transporter } from '../configs/mail.config';
 import { InewUser } from '../controllers/auth/types/typesUser';
-const transporter = require('../configs/mail.config');
 
 export const sendVerificationEmail = async (newUser: InewUser, otp: number) => {
   const mail = {
