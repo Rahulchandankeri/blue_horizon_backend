@@ -22,7 +22,7 @@
   "name": "bus_booking_server",
   "version": "1.0.0",
   "description": "Bus booking app backend services",
-  "main": "./build/server.js",
+  "main": "/build/server.js",
   "scripts": {
     "start": "tsc --watch ",
     "dev": "set NODE_ENV=dev && concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
