@@ -5,26 +5,16 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 import mongoose from 'mongoose';
-import busRoutes from './routes/busRoutes';
-import userRoutes from './routes/authRoutes';
-import tripRoutes from './routes/tripRoutes';
-import testRoutes from './routes/test';
-import { globalErrorHandler } from './controllers/errorController';
+import busRoutes from '../routes/busRoutes';
+import userRoutes from '../routes/authRoutes';
+import tripRoutes from '../routes/tripRoutes';
+import { globalErrorHandler } from '../controllers/errorController';
 
 app.use(
   cors({ origin: ['http://localhost:3000', 'http://localhost:3002', 'https://bluehorizon.rahulcodes.dev'], credentials: true })
 );
 app.use(express.json());
 app.use(bodyParser.json());
-
-declare var process: {
-  env: {
-    DB: string;
-    DB_PASS: string;
-    NODE_ENV: string;
-    SERVER_PORT: string;
-  };
-};
 
 const connection = mongoose
   .connect(process.env.DB.replace('<password>', process.env.DB_PASS), {})
@@ -40,12 +30,9 @@ const connection = mongoose
 
 app.use(`/api/v1/user`, userRoutes);
 app.use(`/api/v1/bus`, busRoutes);
+
 app.use(`/api/v1/route`, tripRoutes);
-app.use(`/`, testRoutes);
+
 app.use(globalErrorHandler);
 
-app.listen(process.env.SERVER_PORT || 3004, () => {
-  console.log(`Server running on port ${process.env.SERVER_PORT}`);
-});
-
-// export default app;
+export default app;
