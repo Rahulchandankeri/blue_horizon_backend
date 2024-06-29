@@ -16,6 +16,7 @@ const bookingSchema = new Schema({
   price: { type: String, required: true },
   journeyDate: { type: String, required: true },
   email_id: { type: String, required: true },
+  no_of_seats: { type: Number, require: true },
   paymentStatus: {
     type: String,
   },
