@@ -101,6 +101,7 @@ exports.verifyOTP = async (req: Request, res: Response, next: NextFunction) => {
         userDetails: {
           email: user.email_id,
           accessToken,
+          role: user?.role === 'admin' ? user.role : null,
         },
       });
   } catch (error: any) {
